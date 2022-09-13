@@ -1,6 +1,7 @@
 import Logo from "../static/logo.png";
 import Image from "next/image";
 import { FiBookmark } from "react-icons/fi";
+import Link from "next/link";
 
 const styles = {
   authorContainer: "flex gap-[.4rem]",
@@ -22,37 +23,41 @@ const styles = {
 
 const PostCard = () => {
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.postDetails}>
-        <div className={styles.authorContainer}>
-          <div className={styles.authorImageContainer}>
-            <Image
-              src={Logo}
-              className={styles.authorImage}
-              width={40}
-              height={40}
-            />
+    <Link href={`/post/123`}>
+      <div className={styles.wrapper}>
+        <div className={styles.postDetails}>
+          <div className={styles.authorContainer}>
+            <div className={styles.authorImageContainer}>
+              <Image
+                src={Logo}
+                className={styles.authorImage}
+                width={40}
+                height={40}
+              />
+            </div>
+            <div className={styles.authorName}>Chuxuan Quan</div>
           </div>
-          <div className={styles.authorName}>Chuxuan Quan</div>
+          <h1 className={styles.title}>
+            7 Free Tools That Will Make Your More Productive
+          </h1>
+          <div className={styles.briefing}>
+            Productivity that can be learned
+          </div>
+          <div className={styles.detailsContainer}>
+            <span className={styles.articleDetails}>
+              Jun 15 • 5 min read •{" "}
+              <span className={styles.category}>productivity</span>
+            </span>
+            <span className={styles.bookmarkContianer}>
+              <FiBookmark className="h-5 w-5"></FiBookmark>
+            </span>
+          </div>
         </div>
-        <h1 className={styles.title}>
-          7 Free Tools That Will Make Your More Productive
-        </h1>
-        <div className={styles.briefing}>Productivity that can be learned</div>
-        <div className={styles.detailsContainer}>
-          <span className={styles.articleDetails}>
-            Jun 15 • 5 min read •{" "}
-            <span className={styles.category}>productivity</span>
-          </span>
-          <span className={styles.bookmarkContianer}>
-            <FiBookmark className="h-5 w-5"></FiBookmark>
-          </span>
+        <div className={styles.thumbnailContainer}>
+          <Image src={Logo} height={100} width={100}></Image>
         </div>
       </div>
-      <div className={styles.thumbnailContainer}>
-        <Image src={Logo} height={100} width={100}></Image>
-      </div>
-    </div>
+    </Link>
   );
 };
 
