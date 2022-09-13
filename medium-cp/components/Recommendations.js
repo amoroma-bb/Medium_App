@@ -55,8 +55,8 @@ const Recommendations = () => {
         <div className={styles.recommendationContainer}>
           <div className={styles.title}>More form Medium</div>
           <div className={styles.articlesContainer}>
-            {recommendedPosts.map((post) => (
-              <div className={styles.articleContentWrapper}>
+            {recommendedPosts.map((post, index) => (
+              <div className={styles.articleContentWrapper} key={index}>
                 <div className={styles.articleContent}>
                   <div className={styles.recommendationAuthorContainer}>
                     <div
