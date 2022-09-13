@@ -19,10 +19,6 @@ export default function Home() {
           <div className={styles.postList}>
             <PostCard />
             <PostCard />
-            <PostCard />
-            <PostCard />
-            <PostCard />
-            <PostCard />
           </div>
         </div>
       </div>
