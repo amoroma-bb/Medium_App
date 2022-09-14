@@ -1,34 +1,37 @@
 import Image from "next/image";
 import { AiFillPlayCircle } from "react-icons/ai";
-import Qazi from "../static/qazi.jpg";
 import { IoLogoTwitter } from "react-icons/io";
 import { FaFacebook } from "react-icons/fa";
 import { GrLinkedin } from "react-icons/gr";
 import { HiOutlineLink } from "react-icons/hi";
 import { BiBookmarks } from "react-icons/bi";
 import { FiMoreHorizontal } from "react-icons/fi";
-import Banner from "../static/banner.png";
 
 const styles = {
-  wrapper: `flex items-center justify-center flex-[3] border-l border-r`,
-  content: `h-screen w-full p-[2rem]`,
-  postHeaderContainer: `flex justify-between itesm-center mt-[2.2rem] mb-[1.2rem]`,
-  authorContainer: `flex gap-[1rem]`,
-  authorProfileImageContainer: `h-[3rem] w-[3rem] grid center rounded-full overflow-hidden`,
-  image: `object-cover`,
-  column: `flex-1 flex flex-col justify-center`,
-  postDetails: `flex gap-[.2rem] text-[#787878]`,
-  listenButton: `flex items-center gap-[.2rem] text-[#1A8917]`,
-  socials: `flex gap-[1rem] text-[#787878] cursor-pointer`,
-  space: `w-[.5rem]`,
-  bannerContainer: `h-[18rem] w-full grid center overflow-hidden mb-[2rem]`,
-  articleMainContainer: `flex flex-col gap-[1rem]`,
-  title: `font-bold text-3xl`,
-  subtitle: `font-mediumSerifItalic text-[1.4rem] text-[#292929]`,
-  articleText: `font-mediumSerif text-[1.4rem] text-[#292929]`,
+  wrapper: "flex items-center justify-center flex-[3] border-l border-r",
+  content: "h-screen w-full p-[2]",
+  postHeaderContainer:
+    "flex justify-between items-center mt-[2.2rem] mb-[1.2rem]",
+  authorContainer: "flex gap-[1rem]",
+  authorProfileImageContainer:
+    "h-[3rem] w-[3rem] grid center rounded-full overflow-hidden",
+  postDetails: "flex gap-[.2rem] text-[#787878]",
+  column: "flex-1 flex flex-col justify-center",
+  listenButton: "flex items-center gap-[.2rem] text-[#1A8917]",
+  socials: "flex gap-[1rem] text-[#787878] cursor-pointer",
+  space: "w-[.5rem]",
+  articleMainContainer: "flex flex-col gap-[1rem]",
+  bannerContainer: "h-[18rem] w-full grid center overflow-hidden mb-[2rem]",
+  image: "object-cover",
+  title: "font-bold text-3xl",
+  subtitle: "font-mediumSerifItalic text-[1.4rem] text-[#292929]",
+  articleText: "font-mediumSerif text-[1.4rem] text-[#292929]",
+  dummy: "",
 };
 
-const ArticleMain = () => {
+const ArticleMain = ({ post, author }) => {
+  console.log(post, author);
+  // const date = post.data.postedOn.toDate().toDateString();
   return (
     <div className={styles.wrapper}>
       <div className={styles.content}>
@@ -36,19 +39,21 @@ const ArticleMain = () => {
           <div className={styles.authorContainer}>
             <div className={styles.authorProfileImageContainer}>
               <Image
-                className={styles.image}
-                src={Qazi}
+                className={"object-cover"}
+                src={`https://res.cloudinary.com/demo/image/fetch/${author?.data?.imageUrl}`}
                 width={100}
                 height={100}
               />
             </div>
             <div className={styles.column}>
-              <div>Rafeh Qazi</div>
+              <div className={styles.authorName}>{author?.data?.name}</div>
               <div className={styles.postDetails}>
-                <span>June 15 • 7 min read •</span>
+                <span>
+                  {post.data?.postedOn.toDate().toDateString()} ·{" "}
+                  {post?.data?.postLength} min read ·
+                </span>
                 <span className={styles.listenButton}>
-                  <AiFillPlayCircle />
-                  Listen
+                  <AiFillPlayCircle /> Listen
                 </span>
               </div>
             </div>
@@ -67,25 +72,17 @@ const ArticleMain = () => {
           <div className={styles.bannerContainer}>
             <Image
               className={styles.image}
-              src={Banner}
-              height={100}
+              src={`https://res.cloudinary.com/demo/image/fetch/${post?.data?.bannerImage}`}
               width={100}
+              height={100}
             />
           </div>
-          <h1 className={styles.title}>
-            7 Free Tools That Will Make You More Productive In 2022
-          </h1>
+          <h1 className={styles.title}>{post?.data?.title}</h1>
           <h4 className={styles.subtitle}>
-            <div>Rafeh Qazi, June 15, 2022</div>
-            <div>Brief: Productivity is a skill that can be learned.</div>
+            <div>{post.data?.postedOn.toDate().toDateString()}</div>
+            <div>{post?.data?.brief}</div>
           </h4>
-          <div className={styles.articleText}>
-            Ad duis nisi cillum excepteur deserunt. Consectetur nisi nisi non
-            excepteur amet aliqua amet mollit dolor velit do aute non laboris.
-            Ullamco do qui magna eu dolor consequat in eu. Nisi veniam id
-            officia est. Laborum eu Lorem aliquip aute incididunt et cillum
-            proident.
-          </div>
+          <div className={styles.articleText}>{post?.data?.body}</div>
         </div>
       </div>
     </div>

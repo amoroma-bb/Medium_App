@@ -14,7 +14,7 @@ const styles = {
 
 export default function Home() {
   const { posts } = useContext(MediumContext);
-  console.log(posts);
+  // console.log(posts);
 
   // console.log(users);
   return (

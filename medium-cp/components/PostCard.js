@@ -25,15 +25,15 @@ const styles = {
 };
 
 const PostCard = ({ post }) => {
-  const date = post.data.postedOn.toDate().toDateString();
-  const [authorData, setAuthorData] = useState(null);
+  //   const date = post.data?.postedOn?.toDate().toDateString();
+  const [authorData, setAuthorData] = useState([]);
   useEffect(() => {
     const getAuthorData = async () => {
-      setAuthorData(await getDoc(doc(db, "users", post.data.author)));
+      setAuthorData((await getDoc(doc(db, "users", post.data.author))).data());
     };
     getAuthorData();
+    // console.log(authorData);
   }, []);
-  console.log(post.data.postedOn);
   return (
     <Link href={`/post/${post.id}`}>
       <div className={styles.wrapper}>
@@ -41,19 +41,19 @@ const PostCard = ({ post }) => {
           <div className={styles.authorContainer}>
             <div className={styles.authorImageContainer}>
               <Image
-                src={Logo}
+                src={`https://res.cloudinary.com/demo/image/fetch/${authorData?.imageUrl}`}
                 className={styles.authorImage}
                 width={40}
                 height={40}
               />
             </div>
-            <div className={styles.authorName}>{post.data.author}</div>
+            <div className={styles.authorName}>{authorData.name}</div>
           </div>
           <h1 className={styles.title}>{post.data.title}</h1>
           <div className={styles.briefing}>{post.data.brief}</div>
           <div className={styles.detailsContainer}>
             <span className={styles.articleDetails}>
-              {date} • {post.data.postLength} min read •{" "}
+              2022 • {post.data.postLength} min read •{" "}
               <span className={styles.category}>{post.data.category}</span>
             </span>
             <span className={styles.bookmarkContianer}>
