@@ -2,6 +2,9 @@ import Logo from "../static/logo.png";
 import Image from "next/image";
 import { FiBookmark } from "react-icons/fi";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { getDoc, doc } from "firebase/firestore";
+import { db } from "../firebase";
 
 const styles = {
   authorContainer: "flex gap-[.4rem]",
@@ -18,12 +21,21 @@ const styles = {
   bookmarkContianer: "cursor-pointer",
   wrapper:
     "flex max-w-[46rem] h-[10rem] items-center gap-[1rem] cursor-pointer",
-  thumbnailContainer: "",
+  thumbnailContainer: "flex-1",
 };
 
-const PostCard = () => {
+const PostCard = ({ post }) => {
+  const date = post.data.postedOn.toDate().toDateString();
+  const [authorData, setAuthorData] = useState(null);
+  useEffect(() => {
+    const getAuthorData = async () => {
+      setAuthorData(await getDoc(doc(db, "users", post.data.author)));
+    };
+    getAuthorData();
+  }, []);
+  console.log(post.data.postedOn);
   return (
-    <Link href={`/post/123`}>
+    <Link href={`/post/${post.id}`}>
       <div className={styles.wrapper}>
         <div className={styles.postDetails}>
           <div className={styles.authorContainer}>
@@ -35,18 +47,14 @@ const PostCard = () => {
                 height={40}
               />
             </div>
-            <div className={styles.authorName}>Chuxuan Quan</div>
+            <div className={styles.authorName}>{post.data.author}</div>
           </div>
-          <h1 className={styles.title}>
-            7 Free Tools That Will Make Your More Productive
-          </h1>
-          <div className={styles.briefing}>
-            Productivity that can be learned
-          </div>
+          <h1 className={styles.title}>{post.data.title}</h1>
+          <div className={styles.briefing}>{post.data.brief}</div>
           <div className={styles.detailsContainer}>
             <span className={styles.articleDetails}>
-              Jun 15 • 5 min read •{" "}
-              <span className={styles.category}>productivity</span>
+              {date} • {post.data.postLength} min read •{" "}
+              <span className={styles.category}>{post.data.category}</span>
             </span>
             <span className={styles.bookmarkContianer}>
               <FiBookmark className="h-5 w-5"></FiBookmark>
@@ -54,7 +62,11 @@ const PostCard = () => {
           </div>
         </div>
         <div className={styles.thumbnailContainer}>
-          <Image src={Logo} height={100} width={100}></Image>
+          <Image
+            src={`https://res.cloudinary.com/demo/image/fetch/${post.data.bannerImage}`}
+            height={100}
+            width={100}
+          ></Image>
         </div>
       </div>
     </Link>
